@@ -1,7 +1,11 @@
 import express from "express";
 import connectToDb from "./utils/connectToDb.js";
+import apiRouter from "./routers/router.js";
 
 const app = express();
+
+app.use(express.json());
+app.use(apiRouter.signup);
 
 await connectToDb(process.env.DB_URI);
 app.listen(process.env.PORT, () => {
