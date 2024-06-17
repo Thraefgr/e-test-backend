@@ -14,15 +14,21 @@ router.post("/signup", async (req, res) => {
         res.statusCode = 400;
         res.json({message: "Your password is too short!"});
     } else {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(form.password, salt);
-        const newUser = await User.insertMany([{
-            email: form.email,
-            username: form.username,
-            password: hashedPassword,
-            role: form.role
-        }])
-        res.json({message: "You have successfully signed up!"})
+        try {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(form.password, salt);
+            const newUser = await User.insertMany([{
+                email: form.email,
+                username: form.username,
+                password: hashedPassword,
+                role: form.role
+            }])
+            res.json({message: "You have successfully signed up!"})
+        } catch (error) {
+            res.statusCode = 400;
+            res.json({message: "Check it again!"})
+        }
+
     }
 })
 
