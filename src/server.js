@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(apiRouter.signup);
 app.use(apiRouter.signin);
+app.use(apiRouter.profile);
 
 await connectToDb(process.env.DB_URI);
 app.listen(process.env.PORT, () => {
