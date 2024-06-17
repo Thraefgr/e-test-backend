@@ -1,0 +1,19 @@
+{
+  "name": "e-test-api",
+  "version": "1.0.0",
+  "description": "This is the backend part of my school project called \"e-test\"",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --env-file=.env --watch ./src/server.js"
+  },
+  "author": "Ferhat Yenilmez",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1"
+  }
+}
