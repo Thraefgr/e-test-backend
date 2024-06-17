@@ -1,7 +1,9 @@
-import router from "./signup.js";
+import signInRouter from "./signin.js";
+import signUpRouter from "./signup.js";
 
 const apiRouter = {
-    signup: router
+    signup: signUpRouter,
+    signin: signInRouter
 }
 
 export default apiRouter;

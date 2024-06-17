@@ -26,4 +26,5 @@ router.post("/signup", async (req, res) => {
     }
 })
 
-export default router;
+const signUpRouter = router;
+export default signUpRouter;
