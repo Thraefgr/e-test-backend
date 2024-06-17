@@ -1,10 +1,18 @@
 import mongoose, { Schema, model } from "mongoose"
 
 const userSchema = new Schema({
-    e_mail: {
+    email: {
+        type: String,
+        required: true,
+    },
+    username: {
         type: String,
         unique: true,
         required: true,
+    },
+    password: {
+        type: String,
+        required: true
     },
     role: {
         type: String,
@@ -17,7 +25,7 @@ const userSchema = new Schema({
     university: String,
 }, {timestamps:true})
 
-userSchema.index({e_mail:1})
+userSchema.index({username:1})
 
 const User = mongoose.models.User || model("users", userSchema);
 
