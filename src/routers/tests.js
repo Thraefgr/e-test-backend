@@ -34,6 +34,21 @@ router.post("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
 
 })
 
+router.put("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
+    try {
+        const username = getPayload(req.headers.authorization).username;
+        const test = req.body;
+        test.creator = username;
+        const upTest = new Test(test);
+        const updatedTest = await Test.findOneAndReplace({creator:username, _id:test._id}, upTest, {returnOriginal:false})
+        res.json({message: "Successfully updated that one test nobody solves..."})
+    } catch (error) {
+        res.statusCode = 400;
+        res.json({message:"Something went wrong. Maybe try again?"});
+    }
+
+})
+
 router.delete("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
     try {
         const username = getPayload(req.headers.authorization).username;
@@ -49,8 +64,6 @@ router.delete("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
         res.statusCode = 400
         res.json({error:"Send a proper request first! Then we can handle your situation."})
     }
-
-
 })
 
 
