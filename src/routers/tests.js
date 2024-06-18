@@ -12,6 +12,13 @@ router.get("/tests", checkAuth, async (req, res) => {
     res.json(allTests)
 })
 
+
+router.get("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
+    const username = getPayload(req.headers.authorization).username;
+    const tests = await Test.find({creator:username});
+    res.json(tests)
+})
+
 router.post("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
     try {
         const username = getPayload(req.headers.authorization).username;
@@ -24,6 +31,25 @@ router.post("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
         res.statusCode = 400;
         res.json({error:`Your test is invalid! ${error}`});
     }
+
+})
+
+router.delete("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
+    try {
+        const username = getPayload(req.headers.authorization).username;
+        const testId = req.body.testId;
+        const deletedTest = await Test.findOneAndDelete({_id:testId, creator:username});
+        if(deletedTest) {
+            res.json({message:"You've successfully deleted the test that none solved..."})
+        } else {
+            res.statusCode = 400
+            res.json({error:"The test you are trying to delete is either already gone or you are trying to access someone elses test!! You cheeky bastard."})
+        }
+    } catch (error) {
+        res.statusCode = 400
+        res.json({error:"Send a proper request first! Then we can handle your situation."})
+    }
+
 
 })
 
