@@ -42,6 +42,18 @@ router.get("/inventory", checkAuth, async (req, res) => {
         res.statusCode = 400;
         res.json({error:"Don't know, don't care."});
     }
+})
+
+router.delete("/inventory", checkAuth, async (req, res) => {
+    try {
+        const username = getPayload(req.headers.authorization).username;
+        const testId = req.body.testId;
+        const user = await User.updateOne({username:username}, {$pull:{"inventory": {testId:testId}}});
+        res.json({success:"You have successfully removed this test from your account!"});
+    } catch (error) {
+        res.statusCode = 400;
+        res.json({error:"Something went wrong!"})
+    }
 
 })
 
