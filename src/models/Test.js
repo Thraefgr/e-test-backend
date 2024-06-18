@@ -9,6 +9,10 @@ const testSchema = new Schema({
         type: String,
         required: true
     },
+    timeLimit: {
+        type: Number,
+        required: true
+    },
     questions: {
         type: [{
             question: String,
