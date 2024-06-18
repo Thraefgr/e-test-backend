@@ -33,5 +33,17 @@ router.post("/inventory", checkAuth, async (req, res) => {
 
 })
 
+router.get("/inventory", checkAuth, async (req, res) => {
+    try {
+        const username = getPayload(req.headers.authorization).username;
+        const ownedTests = await User.findOne({username:username}, {_id:0, inventory:1}).populate({path:"inventory.testId", select:"-questions"});
+        res.json(ownedTests);
+    } catch (error) {
+        res.statusCode = 400;
+        res.json({error:"Don't know, don't care."});
+    }
+
+})
+
 const inventoryRouter = router;
 export default inventoryRouter;
