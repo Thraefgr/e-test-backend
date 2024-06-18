@@ -9,6 +9,7 @@ app.use(apiRouter.signup);
 app.use(apiRouter.signin);
 app.use(apiRouter.profile);
 app.use(apiRouter.tests);
+app.use(apiRouter.inventory);
 
 await connectToDb(process.env.DB_URI);
 app.listen(process.env.PORT, () => {

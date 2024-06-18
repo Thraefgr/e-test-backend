@@ -34,7 +34,7 @@ router.post("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
 
 })
 
-router.put("/tests/mycreation", checkAuth, checkRole, async (req, res) => {
+router.put("/tests/mycreation", checkAuth, checkRole, async (req, res) => {//Don't hate me on this. I was just lazy. I know it is not that robust. But it is easier!!
     try {
         const username = getPayload(req.headers.authorization).username;
         const test = req.body;
