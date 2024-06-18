@@ -2,6 +2,7 @@ import express from "express";
 import checkAuth from "../middlewares/checkAuth.js";
 import Test from "../models/Test.js";
 import Buffer from "node:buffer"
+import checkRole from "../middlewares/checkRole.js";
 
 const router = express.Router()
 
@@ -9,6 +10,8 @@ router.get("/tests", checkAuth, async (req, res) => {
     let allTests = await Test.find({}, {__v:0, questions:0});
     res.json(allTests)
 })
+
+router.post("/")
 
 router.get("/tests/:id", checkAuth, async (req, res) => {
     try {

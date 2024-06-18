@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
+import getPayload from "../utils/getPayload.js";
 
 async function checkRole(req, res, next) {
-    const authorization = req.headers.authorization;
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.decode(token);
+    const decoded = getPayload(req.headers.authorization);
     if (decoded.role!="teacher") {
         res.statusCode = 400;
         res.json({message:"You can not do that!"});
