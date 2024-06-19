@@ -21,12 +21,13 @@ router.get("/exam/:id", checkAuth, async (req, res) => {
                 foreignField:"_id",
                 as:"inventory.testId"
             }},
-            {$project:{_id:0, inventory:1, test:1}}
+            {$project:{_id:0, inventory:1, test:1}},
+            {$project:{"inventory.testId.questions.answer":0}}
         ])
         res.json(result[0].inventory);
     } catch (error) {
         res.statusCode = 400;
-        res.json({error:"Please send a better request next time. Okay?"})
+        res.json({error:`Please send a better request next time. Okay?${error}`})
     }
 
 })
