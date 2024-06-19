@@ -3,6 +3,7 @@ import checkAuth from "../middlewares/checkAuth.js";
 import getPayload from "../utils/getPayload.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
+import Test from "../models/Test.js";
 
 const router = express.Router();
 
@@ -21,8 +22,8 @@ router.get("/exam/:id", checkAuth, async (req, res) => {
                 foreignField:"_id",
                 as:"inventory.testId"
             }},
-            {$project:{_id:0, inventory:1, test:1}},
-            {$project:{"inventory.testId.questions.answer":0}}
+            {$project:{_id:0}},
+            {$project:{"inventory.testId.questions.answer":0}},
         ])
         res.json(result[0].inventory);
     } catch (error) {
@@ -32,5 +33,36 @@ router.get("/exam/:id", checkAuth, async (req, res) => {
 
 })
 
+router.post("/exam/:id", checkAuth, async (req, res) => {
+    try {
+        const username = getPayload(req.headers.authorization).username;
+        const testId = req.params.id;
+        const result = await User.findOne({username:username})
+        const test = await Test.findOne({_id:testId});
+        const userTest = req.body.testId[0];
+        let rightOnes = 0;
+        let score = 0;
+        test.questions.forEach((qu, i) => {
+            if (qu.answer === userTest.questions[i].choice) {
+                score += qu.points;
+                rightOnes++
+            }
+        })
+        result.inventory.forEach(test => {
+            if(test.testId.toString() === testId) {
+                test.rightOnes = rightOnes;
+                test.score = score;
+                test.finishDate = new Date();
+            }
+        })
+        result.save()
+        res.json({success:"You are the best! Let's solve another one!!"})
+
+    } catch (error) {
+        res.statusCode = 400;
+        res.json({error:"Don't know, don't care."})
+    }
+
+})
 const examRouter = router;
 export default examRouter;

@@ -17,6 +17,7 @@ const testSchema = new Schema({
         type: [{
             question: String,
             choices: [String],
+            choice: {type:String, default:null|""},
             answer: String,
             points: Number
         }],

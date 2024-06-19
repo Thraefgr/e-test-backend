@@ -19,7 +19,7 @@ const userSchema = new Schema({
         required: true
     },
     inventory: {
-        type: [{testId:{type: Schema.Types.ObjectId, ref:"tests"}, choicess:[String], purchaseDate: Date, startDate:Date, finishDate:Date}]
+        type: [{testId:{type: Schema.Types.ObjectId, ref:"tests"}, choicess:[String], purchaseDate: Date, startDate:Date, finishDate:Date, rightOnes:Number, score:Number}]
     },
     name: String,
     surname: String,
