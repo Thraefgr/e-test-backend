@@ -12,7 +12,7 @@ router.post("/signin", async (req, res) => {
         const result = await bcrypt.compare(form.password, user.password)
         if (result) {
             const token = jwt.sign({username: user.username, role: user.role}, process.env.SECRET_KEY, {expiresIn:"1d"})
-            res.json({message: "Successfully signed in!", token:token});
+            res.json({message: "Successfully signed in!", token:token, role:user.role});
         } else {
             res.statusCode = 400;
             res.json({message: "Username or password is incorrect."});
