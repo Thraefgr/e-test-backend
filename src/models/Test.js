@@ -27,6 +27,14 @@ const testSchema = new Schema({
         type: String, 
         ref: "users", 
         required: true
+    },
+    difficulty: {
+        type: String,
+        required: true
+    },
+    queCount: {
+        type: Number,
+        required: true 
     }
 }, {timestamps:true})
 
