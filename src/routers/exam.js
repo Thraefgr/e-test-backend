@@ -25,7 +25,7 @@ router.get("/exam/:id", checkAuth, async (req, res) => {
             {$project:{_id:0}},
             {$project:{"inventory.testId.questions.answer":0}},
         ])
-        res.json(result[0].inventory);
+        res.json(result[0].inventory.testId[0]);
     } catch (error) {
         res.statusCode = 400;
         res.json({error:`Please send a better request next time. Okay?${error}`})
@@ -39,7 +39,7 @@ router.post("/exam/:id", checkAuth, async (req, res) => {
         const testId = req.params.id;
         const result = await User.findOne({username:username})
         const test = await Test.findOne({_id:testId});
-        const userTest = req.body.testId[0];
+        const userTest = req.body;
         let rightOnes = 0;
         let score = 0;
         test.questions.forEach((qu, i) => {
