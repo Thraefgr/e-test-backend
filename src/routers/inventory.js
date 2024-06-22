@@ -44,10 +44,10 @@ router.get("/inventory", checkAuth, async (req, res) => {
     }
 })
 
-router.delete("/inventory", checkAuth, async (req, res) => {
+router.delete("/inventory/:id", checkAuth, async (req, res) => {
     try {
         const username = getPayload(req.headers.authorization).username;
-        const testId = req.body.testId;
+        const testId = req.params.id;
         const user = await User.updateOne({username:username}, {$pull:{"inventory": {testId:testId}}});
         res.json({success:"You have successfully removed this test from your account!"});
     } catch (error) {
