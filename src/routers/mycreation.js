@@ -59,5 +59,16 @@ router.delete("/mycreation/:id", checkAuth, checkRole, async (req, res) => {
     }
 })
 
+router.get("/mycreation/:id", checkAuth, checkRole, async (req, res) => {
+    try {
+        const username = getPayload(req.headers.authorization).username;
+        const testId = req.params.id;
+        const test = await Test.findOne({_id:testId, creator:username});
+        res.json(test)  
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 const myCreationRouter = router;
 export default myCreationRouter;
