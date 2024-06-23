@@ -63,7 +63,7 @@ router.get("/mycreation/:id", checkAuth, checkRole, async (req, res) => {
     try {
         const username = getPayload(req.headers.authorization).username;
         const testId = req.params.id;
-        const test = await Test.findOne({_id:testId, creator:username});
+        const test = await Test.findOne({_id:testId, creator:username}, {_id:0, __v:0});
         res.json(test)  
     } catch (error) {
         console.log(error)
