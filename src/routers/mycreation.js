@@ -27,13 +27,14 @@ router.post("/mycreation", checkAuth, checkRole, async (req, res) => {
 
 })
 
-router.put("/mycreation", checkAuth, checkRole, async (req, res) => {//Don't hate me on this. I was just lazy. I know it is not that robust. But it is easier!!
+router.put("/mycreation/:id", checkAuth, checkRole, async (req, res) => {//Don't hate me on this. I was just lazy. I know it is not that robust. But it is easier!!
     try {
         const username = getPayload(req.headers.authorization).username;
+        const testId = req.params.id;
         const test = req.body;
         test.creator = username;
         const upTest = new Test(test);
-        const updatedTest = await Test.findOneAndReplace({creator:username, _id:test._id}, upTest, {returnOriginal:false})
+        const updatedTest = await Test.findOneAndReplace({creator:username, _id:testId}, upTest, {returnOriginal:false})
         res.json({message: "Successfully updated that one test nobody solves..."})
     } catch (error) {
         res.statusCode = 400;
@@ -63,7 +64,7 @@ router.get("/mycreation/:id", checkAuth, checkRole, async (req, res) => {
     try {
         const username = getPayload(req.headers.authorization).username;
         const testId = req.params.id;
-        const test = await Test.findOne({_id:testId, creator:username}, {_id:0, __v:0});
+        const test = await Test.findOne({_id:testId, creator:username}, {_id:1, __v:0});
         res.json(test)  
     } catch (error) {
         console.log(error)
