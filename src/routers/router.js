@@ -1,5 +1,6 @@
 import examRouter from "./exam.js";
 import inventoryRouter from "./inventory.js";
+import myCreationRouter from "./mycreation.js";
 import profileRouter from "./profile.js";
 import signInRouter from "./signin.js";
 import signUpRouter from "./signup.js";
@@ -11,7 +12,8 @@ const apiRouter = {
     profile: profileRouter,
     tests: testsRouter,
     inventory: inventoryRouter,
-    exam: examRouter
+    exam: examRouter,
+    myCreation: myCreationRouter
 }
 
 export default apiRouter;
