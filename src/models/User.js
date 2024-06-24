@@ -23,9 +23,10 @@ const userSchema = new Schema({
     },
     name: String,
     surname: String,
-    birthday: Date,
     major: String,
     university: String,
+    GPA: Number,
+    job: String
 }, {timestamps:true, strictPopulate:false})
 
 userSchema.index({username:1})

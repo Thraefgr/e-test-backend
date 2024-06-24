@@ -32,7 +32,7 @@ router.put("/profile", checkAuth, async (req, res) => {
     const form = req.body;
     const updatedUser = await User.findOneAndUpdate(
                                 {username:decoded.username},
-                                {$set:{email:form.email, name:form.name, surname:form.surname, birthday:form.birthday, major:form.major, university:form.university}},
+                                {$set:{email:form.email, name:form.name, surname:form.surname, major:form.major, university:form.university, GPA:form.GPA, job:form.job}},
                                 {returnOriginal:false, projection:{_id:0, __v:0, password:0}})
     res.json(updatedUser)
 })
