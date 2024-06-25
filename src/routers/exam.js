@@ -4,10 +4,11 @@ import getPayload from "../utils/getPayload.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
 import Test from "../models/Test.js";
+import checkExam from "../middlewares/checkExam.js";
 
 const router = express.Router();
 
-router.get("/exam/:id", checkAuth, async (req, res) => {
+router.get("/exam/:id", checkAuth, checkExam,  async (req, res) => {
     try {
         const username = getPayload(req.headers.authorization).username;
         const testId = new mongoose.Types.ObjectId(req.params.id);
