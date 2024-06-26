@@ -1,11 +1,18 @@
 import express from "express";
 import checkAuth from "../middlewares/checkAuth.js";
 import Test from "../models/Test.js";
+import getPayload from "../utils/getPayload.js";
+import User from "../models/User.js";
 
 const router = express.Router()
 
 router.get("/tests", checkAuth, async (req, res) => {
-    let allTests = await Test.find({}, {__v:0, questions:0});
+    const username = getPayload(req.headers.authorization).username;
+    const user = await User.findOne({username:username}, {"inventory.testId":1});
+    const testIds = [];
+    user.inventory.forEach(test => testIds.push(test.testId))
+    console.log(testIds)
+    let allTests = await Test.find({_id:{$nin: testIds}}, {__v:0, questions:0});
     res.json(allTests)
 })
 
