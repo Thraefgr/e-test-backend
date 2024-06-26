@@ -11,7 +11,6 @@ router.get("/tests", checkAuth, async (req, res) => {
     const user = await User.findOne({username:username}, {"inventory.testId":1});
     const testIds = [];
     user.inventory.forEach(test => testIds.push(test.testId))
-    console.log(testIds)
     let allTests = await Test.find({_id:{$nin: testIds}}, {__v:0, questions:0});
     res.json(allTests)
 })

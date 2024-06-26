@@ -35,6 +35,10 @@ const testSchema = new Schema({
     queCount: {
         type: Number,
         required: true 
+    },
+    totalPoints: {
+        type:Number,
+        required: true
     }
 }, {timestamps:true})
 
